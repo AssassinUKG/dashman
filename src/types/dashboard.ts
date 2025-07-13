@@ -58,17 +58,14 @@ export interface ThemeConfig {
   
   // New theming options
   backgroundImage?: string;
-  backgroundType?: 'color' | 'gradient' | 'image' | 'pattern';
-  backgroundOpacity?: number;
+  backgroundType?: 'color' | 'image' | 'pattern';
   backgroundBlur?: number;
   cardOpacity?: number;
   cardBlur?: number;
   cardBorderWidth?: number;
   cardBorderColor?: string;
   cardShadow?: string;
-  gradientDirection?: number; // degrees for gradient
-  gradientColors?: string[]; // array of colors for gradient
-  pattern?: 'dots' | 'grid' | 'waves' | 'circuit' | 'hexagon' | 'none';
+  pattern?: 'dots' | 'grid' | 'waves' | 'circuit' | 'hexagon' | 'diagonal' | 'triangles' | 'none';
   patternOpacity?: number;
   patternSize?: number;
   animation?: 'none' | 'subtle' | 'floating' | 'pulse' | 'glow' | 'fade' | 'slide' | 'scale' | 'bounce';
@@ -77,6 +74,19 @@ export interface ThemeConfig {
   compactMode?: boolean;
   reduceMotion?: boolean;
   particleEffects?: boolean;
+  
+  // Effect customization options
+  glowColor?: string; // Custom glow color
+  glowIntensity?: number; // 0-100, intensity of glow effects
+  glowSpeed?: number; // 0.1-5.0, animation speed multiplier
+  pulseColor?: string; // Custom pulse color
+  pulseSpeed?: number; // 0.1-5.0, pulse speed
+  floatDistance?: number; // 1-50, floating distance in pixels
+  floatSpeed?: number; // 0.1-5.0, floating speed
+  particleColor?: string; // Custom particle color
+  particleCount?: number; // 10-200, number of particles
+  particleSpeed?: number; // 0.1-3.0, particle movement speed
+  particleSize?: number; // 1-10, particle size in pixels
 }
 
 export interface LayoutConfig {
