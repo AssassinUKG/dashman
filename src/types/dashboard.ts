@@ -46,15 +46,37 @@ export interface HealthCheckConfig {
 
 export interface ThemeConfig {
   mode: 'light' | 'dark' | 'auto';
-  preset: 'default' | 'custom';
+  preset: 'default' | 'custom' | 'ocean' | 'forest' | 'sunset' | 'midnight' | 'lavender' | 'mint' | 'coral' | 'amber' | 'cyberpunk' | 'matrix';
   primaryColor: string;
   backgroundColor: string;
   cardBackground: string;
   textColor: string;
   accentColor: string;
-  borderRadius: number;
+  borderRadius: string;
   fontFamily: string;
   customCss?: string;
+  
+  // New theming options
+  backgroundImage?: string;
+  backgroundType?: 'color' | 'gradient' | 'image' | 'pattern';
+  backgroundOpacity?: number;
+  backgroundBlur?: number;
+  cardOpacity?: number;
+  cardBlur?: number;
+  cardBorderWidth?: number;
+  cardBorderColor?: string;
+  cardShadow?: string;
+  gradientDirection?: number; // degrees for gradient
+  gradientColors?: string[]; // array of colors for gradient
+  pattern?: 'dots' | 'grid' | 'waves' | 'circuit' | 'hexagon' | 'none';
+  patternOpacity?: number;
+  patternSize?: number;
+  animation?: 'none' | 'subtle' | 'floating' | 'pulse' | 'glow' | 'fade' | 'slide' | 'scale' | 'bounce';
+  headerStyle?: 'default' | 'glass' | 'solid' | 'gradient' | 'hidden' | 'minimal' | 'centered' | 'floating';
+  tileStyle?: 'default' | 'glass' | 'neumorphism' | 'flat' | 'elevated' | 'neon' | 'minimal' | 'outlined';
+  compactMode?: boolean;
+  reduceMotion?: boolean;
+  particleEffects?: boolean;
 }
 
 export interface LayoutConfig {

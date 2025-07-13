@@ -12,8 +12,21 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
   subtitle,
   theme,
 }) => {
+  // Get dynamic header classes based on theme
+  const getHeaderClasses = () => {
+    const classes = ['dashboard-header'];
+    
+    if (theme.headerStyle && theme.headerStyle !== 'default') {
+      classes.push(`header-${theme.headerStyle}`);
+    } else {
+      classes.push('header-default');
+    }
+    
+    return classes.join(' ');
+  };
+
   return (
-    <header className="dashboard-header">
+    <header className={getHeaderClasses()}>
       <h1 
         className="dashboard-title"
         style={{ 

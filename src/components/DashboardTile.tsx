@@ -180,24 +180,63 @@ export const DashboardTile: React.FC<DashboardTileProps> = ({
     }
   };
 
+  // Get dynamic tile classes based on theme
+  const getTileClasses = () => {
+    const classes = ['dashboard-tile'];
+    
+    if (editorState.selectedTile === tile.id) {
+      classes.push('selected');
+    }
+    
+    // Add theme-based classes
+    if (theme.tileStyle && theme.tileStyle !== 'default') {
+      classes.push(`tile-${theme.tileStyle}`);
+    } else {
+      classes.push('tile-default');
+    }
+    
+    if (theme.animation && theme.animation !== 'none') {
+      classes.push(`animate-${theme.animation}`);
+    }
+    
+    return classes.join(' ');
+  };
+
+  // Get dynamic tile styles
+  const getTileStyles = () => {
+    const styles: React.CSSProperties = {
+      backgroundColor: theme.cardBackground,
+      borderRadius: theme.borderRadius,
+      border: editorState.selectedTile === tile.id ? `2px solid ${theme.primaryColor}` : '1px solid #e2e8f0',
+      color: theme.textColor,
+      fontFamily: theme.fontFamily,
+    };
+
+    // Apply card opacity
+    if (theme.cardOpacity && theme.cardOpacity < 100) {
+      styles.backgroundColor = `${theme.cardBackground}${Math.round((theme.cardOpacity / 100) * 255).toString(16).padStart(2, '0')}`;
+    }
+
+    // Apply card blur
+    if (theme.cardBlur && theme.cardBlur > 0) {
+      styles.backdropFilter = `blur(${theme.cardBlur}px)`;
+    }
+
+    return styles;
+  };
+
   return (
     <div
       ref={setNodeRef}
       style={style}
       {...(editorState.isOpen ? attributes : {})}
       {...(editorState.isOpen ? listeners : {})}
-      className={`dashboard-tile ${editorState.selectedTile === tile.id ? 'selected' : ''}`}
+      className={getTileClasses()}
       onClick={handleClick}
     >
       <div 
         className="tile-content"
-        style={{
-          backgroundColor: theme.cardBackground,
-          borderRadius: theme.borderRadius,
-          border: editorState.selectedTile === tile.id ? `2px solid ${theme.primaryColor}` : '1px solid #e2e8f0',
-          color: theme.textColor,
-          fontFamily: theme.fontFamily,
-        }}
+        style={getTileStyles()}
       >
         <div className="tile-header">
           <div className="tile-status">
