@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  dashman:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    environment:
+      - NODE_ENV=production
+    volumes:
+      # Optional: Mount config file if you want persistent configuration
+      # - ./data:/app/data
+    restart: unless-stopped
+    networks:
+      - dashman-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Optional: Add a reverse proxy for SSL termination and custom domain
+  # nginx-proxy:
+  #   image: nginx:alpine
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ./proxy.conf:/etc/nginx/nginx.conf:ro
+  #     - ./ssl:/etc/nginx/ssl:ro
+  #   depends_on:
+  #     - dashman
+  #   networks:
+  #     - dashman-network
+  #   restart: unless-stopped
+
+networks:
+  dashman-network:
+    driver: bridge
+
+volumes:
+  dashman-data:
+    driver: local
