@@ -1,6 +1,6 @@
-# Dashman - Homelab Dashboard
+# Dashman - Professional Homelab Dashboard
 
-A modern, highly customizable dashboard for homelab services inspired by Dashy, built with React, TypeScript, and Vite. Features a powerful built-in editor with real-time editing capabilities, advanced customization options, and production-ready Docker deployment.
+A next-generation homelab dashboard that takes service management to the next level. Built from the ground up with React 18, TypeScript, and modern web technologies, Dashman delivers the ultimate dashboard experience with real-time editing, advanced health monitoring, and enterprise-grade features in a sleek, customizable interface.
 
 ## Screenshot
 
@@ -11,59 +11,51 @@ A modern, highly customizable dashboard for homelab services inspired by Dashy, 
 
 TO BE MADE
 
-## ✨ Features
+## ✨ Key Features
 
-### 🎨 **Advanced Theming & Customization**
-- **Theme Presets** - Quick Light/Dark mode switching with professional color schemes
-- **Custom Color Schemes** - Full control over primary, background, text, and accent colors
-- **Typography Control** - 23 Google Fonts available with real-time font switching:
-  - Inter, Roboto, Open Sans, Lato, Source Sans Pro, Poppins, Montserrat
-  - Nunito, Ubuntu, Raleway, Work Sans, Fira Sans, DM Sans, Plus Jakarta Sans
-  - Manrope, Space Grotesk, IBM Plex Sans, Outfit, Lexend, Quicksand
-  - Karla, Public Sans, Noto Sans
-- **Visual Elements** - Customizable border radius, spacing, and layout options
+### �️ **Revolutionary Floating Editor**
+- **Live Editing Experience** - Edit your dashboard while viewing it in real-time with zero page refreshes
+- **Drag & Resize Interface** - Fully draggable editor panel with dual resize handles for precise control
+- **Tabbed Organization** - Intuitive navigation across Page, Layout, Tiles, Theme, and Config management
+- **Keyboard Shortcuts** - Quick toggle with Ctrl+E hotkey for power users
+- **Non-Intrusive Design** - Overlay editing that never blocks your dashboard view
 
-### 🔧 **Floating Editor Interface**
-- **Draggable & Resizable** - Move and resize editor panel with dual resize handles (corner + bottom)
-- **Tabbed Navigation** - Organized interface: Page, Layout, Tiles, Theme, and Config tabs
-- **Keyboard Shortcuts** - Toggle editor visibility with Ctrl+E hotkey
-- **Non-blocking Design** - Edit while viewing your dashboard in real-time
+### 🎨 **Advanced Visual Customization**
+- **Comprehensive Layout Engine** - Multiple grid types (Fixed, Auto-fit, Responsive) with aspect ratio controls
+- **Professional Theme System** - Instant Dark/Light modes plus unlimited custom color schemes
+- **Typography Excellence** - 23 premium Google Fonts with real-time switching and preview
+- **Smart Spacing Controls** - Granular control over gaps, padding, and tile dimensions
+- **Layout Presets** - One-click layouts (Spacious, Compact, Dense, Auto-fit) for different use cases
 
-### 📝 **Page & Content Management**
-- **Dashboard Customization** - Control title, subtitle, and element visibility
-- **Search Integration** - Built-in search bar with real-time filtering
-- **Category System** - Organize services with custom categories and colors
-- **Responsive Layout** - Optimized for desktop, tablet, and mobile devices
+### 🔧 **Intelligent Tile Management**
+- **Smart Service Detection** - Advanced URL handling with automatic fallback and health monitoring
+- **Flexible Icon System** - 4 icon types: Lucide library, custom URLs, SVG code, or file uploads
+- **Drag & Drop Reordering** - Effortless tile arrangement with visual feedback
+- **Per-Tile Configuration** - Individual settings for icons, links, categories, and status monitoring
+- **Category Organization** - Custom categories with color coding and smart filtering
 
-### 🧩 **Advanced Tile Management**
-- **Drag & Drop Reordering** - Intuitive tile arrangement with visual feedback
-- **Per-Tile Configuration** - Individual settings for each service including:
-  - Link behavior (new tab/same tab)
-  - Custom icons (4 types: Lucide, URL, SVG code, file upload)
-  - Health check URLs for status monitoring
-  - Individual status indicator controls
-- **Smart Fallback** - Automatic failover to backup service URLs
+### 📊 **Enterprise Health Monitoring**
+- **Configurable Health Checks** - Customizable polling intervals (5s to 5min) with timeout controls
+- **Smart Fallback Logic** - Automatic failover to backup URLs when primary services are offline
+- **Visual Status Indicators** - Real-time color-coded status with orange fallback notifications
+- **Global Controls** - Master enable/disable with per-tile override capabilities
+- **CORS-Aware Monitoring** - Intelligent handling of cross-origin restrictions
 
-### 📊 **Service Health Monitoring**
-- **Real-time Health Checks** - Automatic service availability monitoring every 30 seconds
-- **Per-Tile Status Control** - Enable/disable status indicators individually
-- **Custom Health URLs** - Configure specific endpoints for health checks
-- **Visual Indicators** - Color-coded status dots with proper CORS and timeout handling
-
-### 🐳 **Production-Ready Deployment**
-- **Docker Containerization** - Multi-stage builds with optimized production images
-- **Nginx Serving** - High-performance static file serving with gzip compression
-- **Health Checks** - Built-in container health monitoring
-- **Security Headers** - Production-ready security configurations
+### � **Production-Ready Architecture**
+- **Docker Containerization** - Optimized multi-stage builds with Nginx serving
+- **Security Hardened** - CSP headers, XSS protection, and security best practices
+- **Mobile Responsive** - Flawless experience across desktop, tablet, and mobile devices
+- **Performance Optimized** - Code splitting, lazy loading, and optimized bundle sizes
+- **Health Check Endpoints** - Built-in container monitoring for production deployments
 
 ## 🚀 Quick Start
 
-### Development Setup
+### 🖥️ Development Setup
 
 1. **Clone the repository:**
    ```bash
    git clone <repository-url>
-   cd dashman_inprogress
+   cd dashman
    ```
 
 2. **Install dependencies:**
@@ -77,24 +69,25 @@ TO BE MADE
    ```
 
 4. **Open your browser** and navigate to `http://localhost:5173`
+   - Press **Ctrl+E** to open the editor and start customizing!
 
-### Docker Deployment
+### 🐳 Docker Deployment
 
 #### Using Docker Compose (Recommended)
 ```bash
 # Build and start the container
 docker-compose up -d
 
-# Access the dashboard at http://localhost:3000
+# Access your dashboard at http://localhost:3000
 ```
 
 #### Manual Docker Build
 ```bash
-# Build the image
+# Build the production image
 docker build -t dashman .
 
 # Run the container
-docker run -d -p 3000:80 --name dashman dashman
+docker run -d -p 3000:80 --name dashman-dashboard dashman
 ```
 
 #### Production Deployment with SSL
@@ -106,77 +99,78 @@ docker run -d -p 3000:80 --name dashman dashman
 docker-compose up -d
 ```
 
-## 📖 Detailed Usage Guide
+## 📖 Comprehensive Usage Guide
 
-### 🔧 Opening the Editor
-- **Method 1:** Click the **Edit** button (pencil icon) in the top-right corner
-- **Method 2:** Press **Ctrl+E** keyboard shortcut
-- The floating editor panel will appear with full drag and resize capabilities
+### � Getting Started with the Editor
+- **Quick Access:** Click the **Edit** button (✏️) in the top-right corner or press **Ctrl+E**
+- **Live Editing:** The floating editor appears without blocking your dashboard view
+- **Full Control:** Drag, resize, and position the editor exactly where you want it
 
-### 📄 Page Settings Tab
-Control your dashboard's main content and appearance:
-- **Dashboard Title** - Set your main dashboard heading
-- **Subtitle** - Add an optional description or tagline
-- **Font Selection** - Choose from 23 Google Fonts with real-time preview
-- **Visibility Controls:**
-  - Show/hide dashboard title
-  - Enable/disable search bar
-  - Control category filter visibility
+### 🎨 Dashboard Personalization (Page Tab)
+Transform your dashboard's appearance and behavior:
+- **Branding:** Set custom titles and subtitles that reflect your homelab identity
+- **Typography:** Choose from 23 premium Google Fonts with instant preview
+- **Layout Elements:** Control visibility of search bars, categories, and navigation
+- **Favicon:** Add custom emojis, images, or uploaded files as your browser tab icon
 
-### 🔲 Layout Configuration Tab
-Customize the visual layout of your dashboard:
-- **Grid Columns** - Set the number of tile columns (1-12)
-- **Gap Size** - Control spacing between tiles (0-100px)
-- **Visual Elements** - Adjust border radius and styling
+### � Advanced Layout Engine (Layout Tab)
+Professional layout control with multiple grid systems:
+- **Grid Types:**
+  - **Fixed Columns:** Traditional grid with set column count (1-12)
+  - **Auto-fit:** Responsive tiles that automatically adjust to screen width
+  - **Responsive:** Breakpoint-based layouts for different screen sizes
+- **Tile Dimensions:** Set aspect ratios (Square, Portrait, Landscape, Wide, Tall)
+- **Spacing Control:** Fine-tune gaps and padding for perfect visual balance
+- **Quick Presets:** One-click layouts (Spacious, Compact, Dense, Auto-fit)
 
-### 🧩 Tile Management Tab
-Comprehensive service tile management:
-- **Add New Tiles** - Click "Add Tile" and configure:
-  - Service name and description
-  - Primary URL and fallback domain
-  - Category assignment
-  - Icon selection (Lucide, URL, SVG, or file upload)
-  - Link behavior (new tab/same tab)
-  - Health check URL configuration
-  - Individual status indicator control
-- **Edit Existing** - Select any tile from the list to modify
-- **Drag to Reorder** - Drag tiles in the dashboard to rearrange
-- **Delete Tiles** - Remove unwanted services
+### 🧩 Service Management (Tiles Tab)
+Comprehensive tile management with enterprise features:
+- **Smart Service Addition:**
+  - Primary URLs with intelligent fallback domains
+  - Dedicated health check endpoints for accurate monitoring
+  - Category assignment with custom color coding
+- **Advanced Icon System:**
+  - **Lucide Icons:** 1000+ professional SVG icons
+  - **Custom URLs:** Link to any web-hosted image
+  - **SVG Code:** Paste custom SVG markup for unique graphics
+  - **File Upload:** Use your own image files
+- **Behavior Controls:** Configure link targets and individual health monitoring
 
-### 🎨 Theme Customization Tab
-Complete visual control with professional presets:
-- **Quick Presets:**
-  - Light Theme: Clean, bright interface
-  - Dark Theme: Modern dark interface
-- **Custom Theme Creation:**
-  - Primary colors for accents and highlights
-  - Background colors for main areas
-  - Text colors for optimal readability
-  - Border radius for visual consistency
-- **Real-time Preview** - See changes instantly as you adjust settings
+### 🎨 Visual Customization (Theme Tab)
+Create stunning visual experiences:
+- **Professional Presets:** Instant Dark/Light themes with carefully selected colors
+- **Custom Theme Creation:** Full control over every color aspect
+- **Real-time Preview:** See changes instantly as you customize
+- **Tile Border Radius:** Control the roundness of your service tiles
 
-### ⚙️ Configuration Management Tab
-Advanced dashboard management:
-- **Export Configuration** - Download your complete dashboard settings as JSON
-- **Import Configuration** - Load settings from a JSON file
-- **Category Management:**
-  - Create new service categories
-  - Assign custom colors to categories
-  - Edit or delete existing categories
-- **Reset Options** - Start fresh with default settings
+### ⚙️ System Configuration (Config Tab)
+Advanced dashboard management and monitoring:
+- **Health Check System:**
+  - **Global Controls:** Master enable/disable for all health monitoring
+  - **Polling Intervals:** Configurable check frequency (5 seconds to 5 minutes)
+  - **Timeout Settings:** Adjust timeout values for different network conditions
+- **Configuration Management:**
+  - **Export/Import:** Save and share your dashboard configurations
+  - **Category Management:** Create, edit, and organize service categories
+  - **Reset Options:** Start fresh while preserving your customizations
 
-### 🔍 Search and Filtering
-- **Global Search** - Type to find services by name or description
-- **Category Filters** - Click category buttons to filter tiles by category
-- **Real-time Results** - Filtering happens instantly as you type
-- **Clear Filters** - Click "All" to show all services
+### 🔍 Smart Search & Filtering
+Efficiently navigate large service collections:
+- **Global Search:** Real-time filtering by service name or description
+- **Category Filtering:** Quick filtering with visual category buttons
+- **Instant Results:** Lightning-fast search with zero delay
+- **Clear Filters:** One-click return to full service view
 
-### 📊 Health Monitoring System
-- **Automatic Checks** - Services are checked every 30 seconds
-- **Visual Indicators** - Green dots for healthy, red for unavailable, gray for disabled
-- **Per-Tile Control** - Enable/disable monitoring for individual services
-- **Custom Endpoints** - Set specific health check URLs different from service URLs
-- **Error Handling** - Graceful handling of CORS restrictions and timeouts
+### 📊 Intelligent Health Monitoring
+Enterprise-grade service monitoring with smart features:
+- **Configurable Monitoring:** Set custom polling intervals and timeout values
+- **Smart Fallback System:** Automatic switching to backup URLs when services are offline
+- **Visual Status Indicators:**
+  - **Green:** Service is healthy and responding
+  - **Red:** Service is unavailable or not responding
+  - **Orange:** Using fallback URL due to primary service being offline
+  - **Gray:** Health monitoring disabled for this tile
+- **Per-Tile Control:** Individual enable/disable for granular monitoring control
 
 ## 🏗️ Project Structure
 
@@ -204,51 +198,57 @@ src/
 └── utils/                  # Utility functions and helpers
 ```
 
-## 🛠️ Technology Stack
+## 🛠️ Modern Technology Stack
 
-- **React 18** - Modern UI library with hooks and concurrent features
-- **TypeScript** - Enhanced JavaScript with comprehensive type safety
-- **Vite** - Lightning-fast build tool and development server
-- **Zustand** - Lightweight state management with localStorage persistence
-- **@dnd-kit** - Smooth drag and drop functionality for tiles and editor
-- **Lucide React** - Beautiful, consistent icon library with 1000+ icons
-- **CSS Modules** - Scoped styling system for component isolation
-- **Google Fonts** - Web typography with 23 carefully selected font families
-- **Docker** - Containerization with multi-stage builds and nginx serving
+**Frontend Excellence:**
+- **React 18** - Latest React with concurrent features and improved performance
+- **TypeScript** - Full type safety with comprehensive interfaces and error prevention
+- **Vite** - Lightning-fast build tool with HMR and optimized production builds
+- **Zustand** - Lightweight state management with built-in persistence
 
-## 🎯 Key Features in Detail
+**Advanced Features:**
+- **@dnd-kit** - Smooth, accessible drag and drop for tiles and editor
+- **Lucide React** - 1000+ beautiful, consistent SVG icons
+- **Google Fonts** - Professional typography with 23 carefully selected font families
+- **CSS Grid** - Modern layout system with responsive breakpoints
 
-### Advanced Icon System
-Four flexible icon types for maximum customization:
-1. **Lucide Icons** - 1000+ professional SVG icons from the Lucide library
-2. **Custom URLs** - Link to any image file (PNG, JPG, SVG, etc.)
-3. **SVG Code** - Paste raw SVG markup for custom graphics
-4. **File Upload** - Upload and use your own image files
+**Production Ready:**
+- **Docker** - Multi-stage containerization with Alpine Linux
+- **Nginx** - High-performance static file serving with compression
+- **Security Headers** - CSP, XSS protection, and security best practices
 
-### Dual Resize Handles
-Enhanced editor usability with two resize options:
-- **Corner Handle** - Resize both width and height simultaneously
-- **Bottom Handle** - Resize height only for precise control
+## 🎯 What Makes Dashman Different
 
-### Professional Theme Presets
-Ready-to-use theme configurations:
-- **Light Theme** - Clean, bright interface with blue accents
-- **Dark Theme** - Modern dark interface with purple accents
-- **Custom Themes** - Complete control over all colors and styling
+### 🚀 **Live Editing Revolution**
+Unlike traditional dashboards that require page refreshes or separate admin panels, Dashman's floating editor lets you customize your dashboard while using it. See your changes instantly with zero interruption to your workflow.
 
-### Per-Tile Health Monitoring
-Granular control over service monitoring:
-- Individual enable/disable for each service
-- Custom health check endpoints
-- Fallback to main URL if no health URL specified
-- Real-time status updates with visual feedback
+### 🧠 **Intelligent Health Monitoring**
+Advanced health checking system that goes beyond simple ping tests:
+- **Smart Fallback Logic:** Automatically switches to backup URLs when primary services fail
+- **Configurable Polling:** Adjust monitoring frequency based on your network and service requirements
+- **Visual Feedback:** Color-coded status indicators with clear fallback notifications
+- **CORS-Aware:** Intelligent handling of cross-origin restrictions
 
-### Font System Integration
-Typography management with Google Fonts:
-- 23 carefully curated font families
-- Real-time font switching without page reload
-- Automatic font loading and caching
-- Fallback font handling for reliability
+### 🎨 **Professional Visual System**
+Enterprise-grade theming and layout capabilities:
+- **Multiple Grid Types:** Fixed, auto-fit, and responsive layouts for any screen size
+- **Aspect Ratio Control:** Square, portrait, landscape, wide, and tall tile options
+- **Typography Excellence:** 23 premium Google Fonts with real-time switching
+- **Layout Presets:** One-click professional layouts (Spacious, Compact, Dense)
+
+### 🔧 **Flexible Icon System**
+Four distinct icon types for maximum customization:
+1. **Lucide Icons** - 1000+ professional SVG icons from the acclaimed Lucide library
+2. **Custom URLs** - Link to any web-hosted image (PNG, JPG, SVG, WebP)
+3. **SVG Code** - Paste custom SVG markup for unique graphics and logos
+4. **File Upload** - Upload and use your own image files directly
+
+### 📱 **Mobile-First Responsive Design**
+Built for modern multi-device usage:
+- **Touch-Optimized** - Perfect touch targets and gesture support
+- **Responsive Breakpoints** - Intelligent layout adaptation across screen sizes
+- **Mobile Editor** - Full editing capabilities on tablets and mobile devices
+- **Performance Optimized** - Fast loading and smooth interactions on all devices
 
 ## 🐳 Docker Configuration
 
@@ -309,23 +309,15 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-- Inspired by [Dashy](https://github.com/Lissy93/dashy) for the original homelab dashboard concept
-- Built with modern React and TypeScript best practices
-- Uses excellent open-source libraries from the React ecosystem
-- Typography powered by Google Fonts
-- Icons provided by Lucide React
-- Containerization with Docker for production deployment
-
-## 📊 Performance & Browser Support
-
-- **Modern Browsers** - Chrome 88+, Firefox 78+, Safari 14+, Edge 88+
-- **Mobile Support** - iOS Safari 14+, Chrome Mobile 88+
-- **Performance** - Optimized bundle size with code splitting
-- **Accessibility** - WCAG 2.1 AA compliance for inclusive design
+- **Original Inspiration:** [Dashy](https://github.com/Lissy93/dashy) for pioneering the homelab dashboard concept
+- **Modern Architecture:** Built with cutting-edge React 18 and TypeScript best practices  
+- **Open Source Excellence:** Powered by exceptional libraries from the React ecosystem
+- **Design System:** Icons by [Lucide React](https://lucide.dev/) and typography by [Google Fonts](https://fonts.google.com/)
+- **Community Driven:** Enhanced through feedback and contributions from the homelab community
 
 ---
 
-**Dashman** - Making homelab service management beautiful, efficient, and production-ready! 🏠✨
+**Dashman** - Elevating homelab service management to professional standards! 🏠✨
 
 ## Created by 
 
