@@ -9,12 +9,14 @@ interface DashboardTileProps {
   tile: TileType;
   theme: ThemeConfig;
   healthStatus?: 'online' | 'offline' | 'checking';
+  healthCheckEnabled?: boolean;
 }
 
 export const DashboardTile: React.FC<DashboardTileProps> = ({ 
   tile, 
   theme,
-  healthStatus
+  healthStatus,
+  healthCheckEnabled = true
 }) => {
   const { selectTile, editorState } = useDashboardStore();
   
@@ -42,21 +44,32 @@ export const DashboardTile: React.FC<DashboardTileProps> = ({
     
     // Always allow navigation when editor is closed
     if (!editorState.isOpen) {
-      // Navigate to the URL
-      if (tile.url) {
-        console.log('Opening URL:', tile.url, 'openInNewTab:', tile.openInNewTab ?? true);
+      // Determine which URL to use based on health status
+      let urlToOpen = tile.url;
+      
+      // If health checking is enabled and the service is offline and we have a fallback URL, use it instead
+      if (healthCheckEnabled && healthStatus === 'offline' && tile.fallbackUrl) {
+        urlToOpen = tile.fallbackUrl;
+        console.log('Service is offline, using fallback URL:', tile.fallbackUrl);
+      } else if (tile.url) {
+        console.log('Using primary URL:', tile.url);
+      }
+      
+      // Navigate to the determined URL
+      if (urlToOpen) {
+        console.log('Opening URL:', urlToOpen, 'openInNewTab:', tile.openInNewTab ?? true);
         
         const shouldOpenInNewTab = tile.openInNewTab ?? true; // Default to new tab if not specified
         
         if (shouldOpenInNewTab) {
           // Open in new tab ONLY
           console.log('Opening in new tab only');
-          window.open(tile.url, '_blank', 'noopener,noreferrer');
+          window.open(urlToOpen, '_blank', 'noopener,noreferrer');
           return; // Stop here - don't do anything else
         } else {
           // Open in current tab ONLY
           console.log('Opening in current tab only');
-          window.location.href = tile.url;
+          window.location.href = urlToOpen;
           return; // Stop here - don't do anything else
         }
       }
@@ -64,14 +77,6 @@ export const DashboardTile: React.FC<DashboardTileProps> = ({
       // In edit mode (editor open), select the tile for editing
       console.log('Edit mode: selecting tile for editing');
       selectTile(tile.id);
-    }
-  };
-
-  const handleFallbackClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (tile.fallbackUrl) {
-      window.open(tile.fallbackUrl, '_blank', 'noopener,noreferrer');
     }
   };
 
@@ -195,7 +200,7 @@ export const DashboardTile: React.FC<DashboardTileProps> = ({
         }}
       >
         <div className="tile-header">
-          {tile.showStatusIndicator && (
+          {tile.showStatusIndicator && healthCheckEnabled && (
             <div className="tile-status">
               {getStatusIcon()}
             </div>
@@ -213,18 +218,21 @@ export const DashboardTile: React.FC<DashboardTileProps> = ({
           {tile.description && (
             <p className="tile-description">{tile.description}</p>
           )}
+          {healthCheckEnabled && healthStatus === 'offline' && tile.fallbackUrl && (
+            <div 
+              className="tile-fallback-indicator"
+              style={{ 
+                fontSize: '0.7rem', 
+                opacity: 0.9, 
+                marginTop: '4px',
+                color: '#f97316', // Orange color
+                fontWeight: '500'
+              }}
+            >
+              Using backup URL
+            </div>
+          )}
         </div>
-        
-        {tile.fallbackUrl && (
-          <div 
-            className="tile-fallback"
-            onClick={handleFallbackClick}
-            style={{ cursor: 'pointer' }}
-            title="Click to use fallback URL"
-          >
-            <small>Fallback available</small>
-          </div>
-        )}
       </div>
     </div>
   );

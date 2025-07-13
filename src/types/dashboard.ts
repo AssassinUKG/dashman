@@ -35,6 +35,13 @@ export interface DashboardConfig {
   layout: LayoutConfig;
   tiles: DashboardTile[];
   categories?: Category[];
+  healthCheck?: HealthCheckConfig;
+}
+
+export interface HealthCheckConfig {
+  enabled: boolean;
+  interval: number; // in seconds
+  timeout: number; // in seconds
 }
 
 export interface ThemeConfig {

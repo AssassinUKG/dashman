@@ -26,13 +26,13 @@ interface DashboardStore {
 }
 
 const defaultTheme: ThemeConfig = {
-  mode: 'auto',
+  mode: 'dark',
   preset: 'default',
-  primaryColor: '#3b82f6',
-  backgroundColor: '#f8fafc',
-  cardBackground: '#ffffff',
-  textColor: '#1e293b',
-  accentColor: '#10b981',
+  primaryColor: '#60a5fa',
+  backgroundColor: '#0f172a',
+  cardBackground: '#1e293b',
+  textColor: '#f1f5f9',
+  accentColor: '#34d399',
   borderRadius: 8,
   fontFamily: 'Inter, system-ui, sans-serif',
 };
@@ -44,8 +44,8 @@ const defaultConfig: DashboardConfig = {
   faviconType: 'emoji',
   theme: defaultTheme,
   layout: {
-    columns: 4,
-    gap: 16,
+    columns: 6,
+    gap: 6,
     padding: 24,
     showTitle: true,
     showSearch: true,
@@ -84,6 +84,7 @@ const defaultConfig: DashboardConfig = {
       title: 'Plex',
       description: 'Media Server',
       url: 'http://plex.local:32400',
+      fallbackUrl: 'https://www.google.com',
       aliveCheckUrl: 'http://plex.local:32400/web/index.html',
       icon: 'play',
       position: { x: 2, y: 0 },
@@ -99,6 +100,11 @@ const defaultConfig: DashboardConfig = {
     { id: '3', name: 'Media', color: '#8b5cf6', icon: 'play' },
     { id: '4', name: 'Monitoring', color: '#f59e0b', icon: 'activity' },
   ],
+  healthCheck: {
+    enabled: true,
+    interval: 30, // 30 seconds
+    timeout: 5,   // 5 seconds
+  },
 };
 
 export const useDashboardStore = create<DashboardStore>()(

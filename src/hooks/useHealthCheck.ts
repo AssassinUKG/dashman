@@ -1,27 +1,30 @@
 import { useState, useEffect, useRef } from 'react';
-import type { DashboardTile } from '../types/dashboard';
+import type { DashboardTile, HealthCheckConfig } from '../types/dashboard';
 
 export interface HealthStatus {
   [tileId: string]: 'online' | 'offline' | 'checking';
 }
 
-export const useHealthCheck = (tiles: DashboardTile[], enabled: boolean = true) => {
+export const useHealthCheck = (tiles: DashboardTile[], healthCheckConfig?: HealthCheckConfig) => {
   const [healthStatus, setHealthStatus] = useState<HealthStatus>({});
   const intervalRef = useRef<number | null>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
 
-  const checkHealth = async (tile: DashboardTile): Promise<'online' | 'offline'> => {
-    const checkUrl = tile.aliveCheckUrl || tile.url;
-    
-    if (!checkUrl) return 'offline';
+  // Use default values if no config provided
+  const config = healthCheckConfig || {
+    enabled: true,
+    interval: 30,
+    timeout: 5
+  };
 
+  const checkUrlHealth = async (url: string): Promise<'online' | 'offline'> => {
     try {
       // Create a new AbortController for this request
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+      const timeoutId = setTimeout(() => controller.abort(), config.timeout * 1000); // Convert to milliseconds
 
       // Try to fetch the URL
-      await fetch(checkUrl, {
+      await fetch(url, {
         method: 'HEAD', // Use HEAD to minimize data transfer
         mode: 'no-cors', // Handle CORS issues
         signal: controller.signal,
@@ -56,7 +59,7 @@ export const useHealthCheck = (tiles: DashboardTile[], enabled: boolean = true) 
           };
           
           // Try to load a favicon or small resource
-          img.src = `${new URL(checkUrl).origin}/favicon.ico?t=${Date.now()}`;
+          img.src = `${new URL(url).origin}/favicon.ico?t=${Date.now()}`;
         });
       } catch {
         return 'offline';
@@ -64,8 +67,19 @@ export const useHealthCheck = (tiles: DashboardTile[], enabled: boolean = true) 
     }
   };
 
+  const checkHealth = async (tile: DashboardTile): Promise<'online' | 'offline'> => {
+    // For health checking, prioritize the dedicated health check URL
+    // If no health check URL is set, fall back to the main URL
+    const healthCheckUrl = tile.aliveCheckUrl || tile.url;
+    
+    if (!healthCheckUrl) return 'offline';
+
+    const status = await checkUrlHealth(healthCheckUrl);
+    return status;
+  };
+
   const checkAllTiles = async () => {
-    if (!enabled || tiles.length === 0) return;
+    if (!config.enabled || tiles.length === 0) return;
 
     // Set all tiles to checking state
     const checkingStatus: HealthStatus = {};
@@ -100,7 +114,7 @@ export const useHealthCheck = (tiles: DashboardTile[], enabled: boolean = true) 
   };
 
   useEffect(() => {
-    if (!enabled) {
+    if (!config.enabled) {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
         intervalRef.current = null;
@@ -111,8 +125,8 @@ export const useHealthCheck = (tiles: DashboardTile[], enabled: boolean = true) 
     // Initial check
     checkAllTiles();
 
-    // Set up periodic checks every 30 seconds
-    intervalRef.current = setInterval(checkAllTiles, 30000);
+    // Set up periodic checks using the configured interval
+    intervalRef.current = setInterval(checkAllTiles, config.interval * 1000); // Convert to milliseconds
 
     return () => {
       if (intervalRef.current) {
@@ -122,7 +136,7 @@ export const useHealthCheck = (tiles: DashboardTile[], enabled: boolean = true) 
         abortControllerRef.current.abort();
       }
     };
-  }, [tiles, enabled]);
+  }, [tiles, config.enabled, config.interval, config.timeout]);
 
   return {
     healthStatus,

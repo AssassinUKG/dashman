@@ -152,6 +152,98 @@ export const ConfigEditor: React.FC = () => {
         </div>
       </div>
       
+      {/* Health Check Settings Section */}
+      <div className="editor-section">
+        <div className="section-header">
+          <h3 style={{ color: config.theme.textColor }}>Health Check Settings</h3>
+        </div>
+        
+        <div className="form-fields">
+          <div className="checkbox-field">
+            <input
+              type="checkbox"
+              id="healthCheckEnabled"
+              checked={config.healthCheck?.enabled ?? true}
+              onChange={(e) => updateConfig({
+                healthCheck: {
+                  ...config.healthCheck,
+                  enabled: e.target.checked,
+                  interval: config.healthCheck?.interval ?? 30,
+                  timeout: config.healthCheck?.timeout ?? 5,
+                }
+              })}
+              style={{
+                accentColor: config.theme.primaryColor,
+              }}
+            />
+            <label 
+              htmlFor="healthCheckEnabled" 
+              style={{ color: config.theme.textColor }}
+            >
+              Enable health checking
+            </label>
+          </div>
+
+          <div className="field">
+            <label style={{ color: config.theme.textColor }}>
+              Check Interval (seconds)
+            </label>
+            <input
+              type="number"
+              min="5"
+              max="300"
+              value={config.healthCheck?.interval ?? 30}
+              onChange={(e) => updateConfig({
+                healthCheck: {
+                  ...config.healthCheck,
+                  enabled: config.healthCheck?.enabled ?? true,
+                  interval: parseInt(e.target.value) || 30,
+                  timeout: config.healthCheck?.timeout ?? 5,
+                }
+              })}
+              style={{
+                backgroundColor: config.theme.cardBackground,
+                borderColor: config.theme.mode === 'dark' ? '#374151' : '#e2e8f0',
+                color: config.theme.textColor,
+                borderRadius: config.theme.borderRadius,
+              }}
+            />
+            <small style={{ color: config.theme.textColor, opacity: 0.7 }}>
+              How often to check service health (5-300 seconds)
+            </small>
+          </div>
+
+          <div className="field">
+            <label style={{ color: config.theme.textColor }}>
+              Request Timeout (seconds)
+            </label>
+            <input
+              type="number"
+              min="1"
+              max="30"
+              value={config.healthCheck?.timeout ?? 5}
+              onChange={(e) => updateConfig({
+                healthCheck: {
+                  ...config.healthCheck,
+                  enabled: config.healthCheck?.enabled ?? true,
+                  interval: config.healthCheck?.interval ?? 30,
+                  timeout: parseInt(e.target.value) || 5,
+                }
+              })}
+              style={{
+                backgroundColor: config.theme.cardBackground,
+                borderColor: config.theme.mode === 'dark' ? '#374151' : '#e2e8f0',
+                color: config.theme.textColor,
+                borderRadius: config.theme.borderRadius,
+              }}
+            />
+            <small style={{ color: config.theme.textColor, opacity: 0.7 }}>
+              How long to wait for a response (1-30 seconds)
+            </small>
+          </div>
+        </div>
+      </div>
+      
       {/* Category Management Section */}
       <div className="editor-section">
         <div className="section-header">

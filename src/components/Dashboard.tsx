@@ -28,7 +28,7 @@ export const Dashboard: React.FC = () => {
     config.tiles.filter(tile => tile.showStatusIndicator), 
     [config.tiles]
   );
-  const { healthStatus } = useHealthCheck(tilesWithStatus, true);
+  const { healthStatus } = useHealthCheck(tilesWithStatus, config.healthCheck);
 
   const filteredTiles = React.useMemo(() => {
     return config.tiles.filter((tile) => {
@@ -137,6 +137,7 @@ export const Dashboard: React.FC = () => {
                 tile={tile}
                 theme={config.theme}
                 healthStatus={healthStatus[tile.id]}
+                healthCheckEnabled={config.healthCheck?.enabled ?? true}
               />
             ))}
           </div>
