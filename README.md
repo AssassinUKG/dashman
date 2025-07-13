@@ -2,6 +2,11 @@
 
 A modern, highly customizable dashboard for homelab services inspired by Dashy, built with React, TypeScript, and Vite. Features a powerful built-in editor with real-time editing capabilities, advanced customization options, and production-ready Docker deployment.
 
+## Screenshot
+
+<img width="2801" height="1477" alt="image" src="https://github.com/user-attachments/assets/71355c54-b360-4f2a-a5b5-329274df731a" style="object-fit: scale-down;" />
+
+
 ## Demo video
 
 TO BE MADE
