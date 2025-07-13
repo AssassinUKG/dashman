@@ -77,7 +77,8 @@ TO BE MADE
 ```bash
 # Build and start the container
 docker-compose up -d
-
+or
+docker-compose.exe -f "c:\Users\User\Documents\dashman\docker-compose.yml" up -d
 # Access your dashboard at http://localhost:3000
 ```
 

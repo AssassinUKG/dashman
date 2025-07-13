@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDashboardStore } from '../../store/dashboard';
 
 export const PageEditor: React.FC = () => {
   const { config, updateConfig } = useDashboardStore();
-  const [faviconFile, setFaviconFile] = useState<File | null>(null);
 
   const handleFaviconUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setFaviconFile(file);
       const reader = new FileReader();
       reader.onload = (event) => {
         const result = event.target?.result as string;

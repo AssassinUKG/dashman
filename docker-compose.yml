@@ -9,7 +9,7 @@ services:
       - "3000:80"
     environment:
       - NODE_ENV=production
-    volumes:
+    # volumes:
       # Optional: Mount config file if you want persistent configuration
       # - ./data:/app/data
     restart: unless-stopped
