@@ -8,13 +8,13 @@ Dashboard
 <img width="1746" height="939" alt="image" src="https://github.com/user-attachments/assets/37aa5caf-32ec-45e9-875f-413af25807f2" />
 
 Dashboard Editor  
-<img width="927" height="1310" alt="image" src="https://github.com/user-attachments/assets/53af9591-988d-434d-a1e1-e0db6e9a4882" />
+<img width="927" height="939" alt="image" src="https://github.com/user-attachments/assets/53af9591-988d-434d-a1e1-e0db6e9a4882" />
 
 Theme Settings (basic)
-<img width="890" height="1284" alt="image" src="https://github.com/user-attachments/assets/6b1ecb1e-ad82-44fa-b710-7aac6c293097" />
+<img width="890" height="939" alt="image" src="https://github.com/user-attachments/assets/6b1ecb1e-ad82-44fa-b710-7aac6c293097" />
 
 Catagory Editor  
-<img width="890" height="1281" alt="image" src="https://github.com/user-attachments/assets/36db4e58-a8c4-4530-bf5c-ba31eede01f8" />
+<img width="890" height="939" alt="image" src="https://github.com/user-attachments/assets/36db4e58-a8c4-4530-bf5c-ba31eede01f8" />
 
 
 ## ✨ Features
