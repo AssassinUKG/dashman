@@ -200,11 +200,9 @@ export const DashboardTile: React.FC<DashboardTileProps> = ({
         }}
       >
         <div className="tile-header">
-          {tile.showStatusIndicator && healthCheckEnabled && (
-            <div className="tile-status">
-              {getStatusIcon()}
-            </div>
-          )}
+          <div className="tile-status">
+            {tile.showStatusIndicator && healthCheckEnabled && getStatusIcon()}
+          </div>
           {tile.isExternal && (
             <ExternalLink size={14} className="external-link-icon" />
           )}
@@ -222,11 +220,16 @@ export const DashboardTile: React.FC<DashboardTileProps> = ({
             <div 
               className="tile-fallback-indicator"
               style={{ 
+                position: 'absolute',
+                bottom: '8px',
+                left: '50%',
+                transform: 'translateX(-50%)',
                 fontSize: '0.7rem', 
                 opacity: 0.9, 
-                marginTop: '4px',
                 color: '#f97316', // Orange color
-                fontWeight: '500'
+                fontWeight: '500',
+                whiteSpace: 'nowrap',
+                pointerEvents: 'none'
               }}
             >
               Using backup URL

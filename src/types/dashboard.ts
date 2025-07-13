@@ -65,6 +65,10 @@ export interface LayoutConfig {
   showSearch: boolean;
   showCategories: boolean;
   showEditButton: boolean;
+  gridType?: 'fixed' | 'auto-fit' | 'responsive';
+  minTileWidth?: number;
+  maxTileWidth?: number;
+  tileAspectRatio?: number;
 }
 
 export interface Category {

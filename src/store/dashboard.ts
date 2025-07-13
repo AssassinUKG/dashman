@@ -51,6 +51,10 @@ const defaultConfig: DashboardConfig = {
     showSearch: true,
     showCategories: true,
     showEditButton: true,
+    gridType: 'fixed',
+    minTileWidth: 250,
+    maxTileWidth: 400,
+    tileAspectRatio: 1,
   },
   tiles: [
     {

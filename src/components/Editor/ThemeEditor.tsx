@@ -234,10 +234,10 @@ export const ThemeEditor: React.FC = () => {
         <h3 style={{ color: config.theme.textColor }}>Visual Settings</h3>
         
         <div className="form-fields">
-          {/* Border Radius */}
+          {/* Tile Border Radius */}
           <div className="field">
             <label style={{ color: config.theme.textColor }}>
-              Border Radius: {config.theme.borderRadius}px
+              Tile Border Radius: {config.theme.borderRadius}px
             </label>
             <input
               type="range"

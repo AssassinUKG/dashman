@@ -23,6 +23,26 @@ export const Dashboard: React.FC = () => {
   const [searchTerm, setSearchTerm] = React.useState('');
   const [selectedCategory, setSelectedCategory] = React.useState<string>('');
 
+  // Generate grid template based on layout type
+  const getGridTemplate = () => {
+    const { gridType, columns, minTileWidth, maxTileWidth } = config.layout;
+    
+    switch (gridType) {
+      case 'auto-fit':
+        return `repeat(auto-fit, minmax(${minTileWidth || 250}px, ${maxTileWidth || 400}px))`;
+      case 'responsive':
+        return `repeat(auto-fit, minmax(280px, 1fr))`;
+      default:
+        return `repeat(${columns}, 1fr)`;
+    }
+  };
+
+  // Calculate tile height based on aspect ratio
+  const getTileHeight = () => {
+    const aspectRatio = config.layout.tileAspectRatio || 1;
+    return aspectRatio === 1 ? 'auto' : `${200 / aspectRatio}px`;
+  };
+
   // Health check for tiles that have status indicators enabled
   const tilesWithStatus = React.useMemo(() => 
     config.tiles.filter(tile => tile.showStatusIndicator), 
@@ -127,8 +147,10 @@ export const Dashboard: React.FC = () => {
           <div 
             className="tiles-grid"
             style={{
-              gridTemplateColumns: `repeat(${config.layout.columns}, 1fr)`,
+              gridTemplateColumns: getGridTemplate(),
+              gridAutoRows: getTileHeight(),
               gap: config.layout.gap,
+              justifyContent: config.layout.gridType === 'auto-fit' ? 'center' : 'stretch',
             }}
           >
             {filteredTiles.map((tile) => (
