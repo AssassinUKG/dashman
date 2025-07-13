@@ -2,9 +2,20 @@
 
 A modern, highly customizable dashboard for homelab services inspired by Dashy, built with React, TypeScript, and Vite. Features a powerful built-in editor with real-time editing capabilities, advanced customization options, and production-ready Docker deployment.
 
-## Created by 
+## Screenshots
 
-ac1d - richard jones pcsp 13/07/2025
+Dashboard  
+<img width="1746" height="939" alt="image" src="https://github.com/user-attachments/assets/37aa5caf-32ec-45e9-875f-413af25807f2" />
+
+Dashboard Editor  
+<img width="927" height="1310" alt="image" src="https://github.com/user-attachments/assets/53af9591-988d-434d-a1e1-e0db6e9a4882" />
+
+Theme Settings (basic)
+<img width="890" height="1284" alt="image" src="https://github.com/user-attachments/assets/6b1ecb1e-ad82-44fa-b710-7aac6c293097" />
+
+Catagory Editor  
+<img width="890" height="1281" alt="image" src="https://github.com/user-attachments/assets/36db4e58-a8c4-4530-bf5c-ba31eede01f8" />
+
 
 ## ✨ Features
 
@@ -321,6 +332,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 **Dashman** - Making homelab service management beautiful, efficient, and production-ready! 🏠✨
+
+## Created by 
+
+ac1d - richard jones pcsp 13/07/2025
 
 ### Quick Links
 - 🚀 [Quick Start](#-quick-start) - Get running in minutes
