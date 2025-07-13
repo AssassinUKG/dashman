@@ -82,12 +82,80 @@ export const ConfigEditor: React.FC = () => {
 
   return (
     <div className="config-editor">
-      <h3 style={{ color: config.theme.textColor }}>Configuration</h3>
+      <div className="editor-section">
+        <h3 style={{ color: config.theme.textColor }}>Configuration Management</h3>
+        
+        <div className="form-fields">
+          <div className="config-actions">
+            <button
+              onClick={handleExport}
+              className="config-button"
+              style={{
+                backgroundColor: config.theme.primaryColor,
+                color: 'white',
+                borderRadius: config.theme.borderRadius,
+              }}
+            >
+              <Download size={16} />
+              Export Config
+            </button>
+            
+            <button
+              onClick={handleReset}
+              className="config-button"
+              style={{
+                backgroundColor: '#ef4444',
+                color: 'white',
+                borderRadius: config.theme.borderRadius,
+              }}
+            >
+              <RotateCcw size={16} />
+              Reset
+            </button>
+          </div>
+
+          <div className="field">
+            <label style={{ color: config.theme.textColor }}>Import Configuration</label>
+            <textarea
+              value={configText}
+              onChange={(e) => setConfigText(e.target.value)}
+              placeholder="Paste configuration JSON here..."
+              rows={8}
+              style={{
+                backgroundColor: config.theme.cardBackground,
+                color: config.theme.textColor,
+                border: `1px solid ${config.theme.primaryColor}30`,
+                borderRadius: config.theme.borderRadius,
+                padding: '8px 12px',
+                width: '100%',
+                fontFamily: 'monospace',
+                fontSize: '0.8rem',
+                resize: 'vertical',
+              }}
+            />
+            {configText.trim() && (
+              <button
+                onClick={handleImport}
+                className="config-button"
+                style={{
+                  backgroundColor: config.theme.accentColor,
+                  color: 'white',
+                  borderRadius: config.theme.borderRadius,
+                  marginTop: '8px',
+                }}
+              >
+                <Upload size={16} />
+                Import
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
       
       {/* Category Management Section */}
-      <div className="config-section">
+      <div className="editor-section">
         <div className="section-header">
-          <h4 style={{ color: config.theme.textColor }}>Categories</h4>
+          <h3 style={{ color: config.theme.textColor }}>Categories</h3>
           <button
             onClick={handleAddCategory}
             className="add-button"
@@ -233,70 +301,6 @@ export const ConfigEditor: React.FC = () => {
             </div>
           </div>
         )}
-      </div>
-
-      {/* Configuration Import/Export Section */}
-      <div className="config-section">
-        <h4 style={{ color: config.theme.textColor }}>Import/Export</h4>
-        
-        <div className="config-actions">
-          <button
-            onClick={handleExport}
-            className="config-button"
-            style={{
-              backgroundColor: config.theme.primaryColor,
-              color: 'white',
-              borderRadius: config.theme.borderRadius,
-            }}
-          >
-            <Download size={16} />
-            Export Config
-          </button>
-          
-          <button
-            onClick={handleReset}
-            className="config-button"
-            style={{
-              backgroundColor: '#ef4444',
-              color: 'white',
-              borderRadius: config.theme.borderRadius,
-            }}
-          >
-            <RotateCcw size={16} />
-            Reset to Default
-          </button>
-        </div>
-
-        <div className="field">
-          <label style={{ color: config.theme.textColor }}>Import Configuration</label>
-          <textarea
-            value={configText}
-            onChange={(e) => setConfigText(e.target.value)}
-            placeholder="Paste your configuration JSON here..."
-            rows={10}
-            style={{
-              backgroundColor: config.theme.cardBackground,
-              color: config.theme.textColor,
-              border: `1px solid ${config.theme.primaryColor}30`,
-              borderRadius: config.theme.borderRadius,
-              width: '100%',
-            }}
-          />
-          <button
-            onClick={handleImport}
-            disabled={!configText.trim()}
-            className="config-button"
-            style={{
-              backgroundColor: config.theme.accentColor,
-              color: 'white',
-              borderRadius: config.theme.borderRadius,
-              marginTop: '8px',
-            }}
-          >
-            <Upload size={16} />
-            Import Config
-          </button>
-        </div>
       </div>
     </div>
   );

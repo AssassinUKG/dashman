@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Plus, Edit, Trash2, Save, X } from 'lucide-react';
+import React, { useState, useMemo } from 'react';
+import { Plus, Edit, Trash2, Save, X, Search } from 'lucide-react';
 import { useDashboardStore } from '../../store/dashboard';
 import type { DashboardTile } from '../../types/dashboard';
 
@@ -15,6 +15,20 @@ export const TileEditor: React.FC = () => {
   
   const [editingTile, setEditingTile] = useState<DashboardTile | null>(null);
   const [iconTab, setIconTab] = useState<'lucide' | 'url' | 'svg' | 'upload'>('lucide');
+  const [searchTerm, setSearchTerm] = useState('');
+
+  // Filter tiles based on search term
+  const filteredTiles = useMemo(() => {
+    if (!searchTerm.trim()) return config.tiles;
+    
+    const term = searchTerm.toLowerCase();
+    return config.tiles.filter(tile => 
+      tile.title.toLowerCase().includes(term) ||
+      tile.description?.toLowerCase().includes(term) ||
+      tile.url.toLowerCase().includes(term) ||
+      tile.category?.toLowerCase().includes(term)
+    );
+  }, [config.tiles, searchTerm]);
 
   const handleAddTile = () => {
     const newTile: DashboardTile = {
@@ -54,6 +68,14 @@ export const TileEditor: React.FC = () => {
     setEditingTile({ ...tile });
     setIconTab(tile.iconType || 'lucide');
     selectTile(tile.id);
+    
+    // Scroll the editing form into view
+    setTimeout(() => {
+      const formElement = document.querySelector('.tile-form');
+      if (formElement) {
+        formElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
   };
 
   const handleSaveTile = () => {
@@ -61,6 +83,7 @@ export const TileEditor: React.FC = () => {
       updateTile(editingTile.id, editingTile);
       setEditingTile(null);
       selectTile(undefined);
+      setSearchTerm(''); // Clear search when saving
     }
   };
 
@@ -82,7 +105,15 @@ export const TileEditor: React.FC = () => {
     <div className="tile-editor">
       <div className="editor-section">
         <div className="section-header">
-          <h3 style={{ color: config.theme.textColor }}>Service Tiles</h3>
+          <div>
+            <h3 style={{ color: config.theme.textColor }}>Service Tiles</h3>
+            <small style={{ color: config.theme.textColor, opacity: 0.6, fontSize: '0.8rem' }}>
+              {searchTerm 
+                ? `${filteredTiles.length} of ${config.tiles.length} tiles`
+                : `${config.tiles.length} tiles total`
+              }
+            </small>
+          </div>
           <button
             onClick={handleAddTile}
             className="add-button"
@@ -97,46 +128,126 @@ export const TileEditor: React.FC = () => {
           </button>
         </div>
 
-        <div className="tiles-list">
-          {config.tiles.map((tile) => (
-            <div
-              key={tile.id}
-              className={`tile-item ${editorState.selectedTile === tile.id ? 'selected' : ''}`}
+        {/* Search bar for tiles */}
+        <div style={{ marginBottom: '1rem' }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            padding: '8px 12px',
+            backgroundColor: config.theme.cardBackground,
+            border: `1px solid ${config.theme.primaryColor}30`,
+            borderRadius: config.theme.borderRadius,
+          }}>
+            <Search size={16} style={{ color: config.theme.textColor, opacity: 0.5 }} />
+            <input
+              type="text"
+              placeholder="Search tiles..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
               style={{
-                backgroundColor: editorState.selectedTile === tile.id 
-                  ? `${config.theme.primaryColor}10`
-                  : config.theme.cardBackground,
-                border: `1px solid ${config.theme.primaryColor}20`,
-                borderRadius: config.theme.borderRadius,
+                flex: 1,
+                border: 'none',
+                outline: 'none',
+                background: 'transparent',
+                color: config.theme.textColor,
+                fontSize: '0.9rem',
               }}
-            >
-              <div className="tile-info">
-                <h4 style={{ color: config.theme.textColor }}>{tile.title}</h4>
-                <p style={{ color: config.theme.textColor, opacity: 0.7 }}>
-                  {tile.description}
-                </p>
-                <small style={{ color: config.theme.textColor, opacity: 0.5 }}>
-                  {tile.url}
-                </small>
-              </div>
-              <div className="tile-actions">
-                <button
-                  onClick={() => handleEditTile(tile)}
-                  className="action-button"
-                  style={{ color: config.theme.primaryColor }}
-                >
-                  <Edit size={16} />
-                </button>
-                <button
-                  onClick={() => handleDeleteTile(tile.id)}
-                  className="action-button"
-                  style={{ color: '#ef4444' }}
-                >
-                  <Trash2 size={16} />
-                </button>
-              </div>
+            />
+            {searchTerm && (
+              <button
+                onClick={() => setSearchTerm('')}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  color: config.theme.textColor,
+                  opacity: 0.5,
+                  padding: '2px',
+                }}
+              >
+                <X size={14} />
+              </button>
+            )}
+          </div>
+        </div>
+
+        <div className="tiles-list">
+          {filteredTiles.length === 0 ? (
+            <div style={{
+              padding: '2rem',
+              textAlign: 'center',
+              color: config.theme.textColor,
+              opacity: 0.6,
+              fontSize: '0.9rem'
+            }}>
+              {searchTerm ? `No tiles found matching "${searchTerm}"` : 'No tiles yet. Add your first tile!'}
             </div>
-          ))}
+          ) : (
+            filteredTiles.map((tile) => (
+              <div
+                key={tile.id}
+                className={`tile-item ${editorState.selectedTile === tile.id ? 'selected' : ''}`}
+                onClick={() => {
+                  if (editingTile) {
+                    handleSaveTile();
+                  }
+                  handleEditTile(tile);
+                }}
+                style={{
+                  backgroundColor: editorState.selectedTile === tile.id 
+                    ? `${config.theme.primaryColor}20`
+                    : config.theme.cardBackground,
+                  border: `1px solid ${config.theme.primaryColor}${editorState.selectedTile === tile.id ? '40' : '20'}`,
+                  borderRadius: config.theme.borderRadius,
+                }}
+              >
+                <div className="tile-info">
+                  <h4 style={{ color: config.theme.textColor, margin: '0 0 4px 0', fontSize: '0.95rem' }}>
+                    {tile.title}
+                  </h4>
+                  <p style={{ color: config.theme.textColor, opacity: 0.7, margin: '0 0 2px 0', fontSize: '0.8rem' }}>
+                    {tile.description}
+                  </p>
+                  <small style={{ color: config.theme.textColor, opacity: 0.5, fontSize: '0.75rem' }}>
+                    {tile.url}
+                  </small>
+                  {tile.category && (
+                    <div style={{
+                      display: 'inline-block',
+                      marginTop: '4px',
+                      padding: '2px 6px',
+                      backgroundColor: config.theme.primaryColor,
+                      color: 'white',
+                      borderRadius: '4px',
+                      fontSize: '0.7rem',
+                      opacity: 0.8
+                    }}>
+                      {tile.category}
+                    </div>
+                  )}
+                </div>
+                <div className="tile-actions" onClick={(e) => e.stopPropagation()}>
+                  <button
+                    onClick={() => handleEditTile(tile)}
+                    className="action-button"
+                    style={{ color: config.theme.primaryColor }}
+                    title="Edit tile"
+                  >
+                    <Edit size={14} />
+                  </button>
+                  <button
+                    onClick={() => handleDeleteTile(tile.id)}
+                    className="action-button"
+                    style={{ color: '#ef4444' }}
+                    title="Delete tile"
+                  >
+                    <Trash2 size={14} />
+                  </button>
+                </div>
+              </div>
+            ))
+          )}
         </div>
       </div>
 
@@ -417,24 +528,26 @@ export const TileEditor: React.FC = () => {
               )}
             </div>
 
-            <div className="field">
-              <label style={{ color: config.theme.textColor }}>
-                <input
-                  type="checkbox"
-                  checked={editingTile.openInNewTab ?? true}
-                  onChange={(e) => setEditingTile({ ...editingTile, openInNewTab: e.target.checked })}
-                />
+            <div className="field checkbox-field">
+              <input
+                type="checkbox"
+                checked={editingTile.openInNewTab ?? true}
+                onChange={(e) => setEditingTile({ ...editingTile, openInNewTab: e.target.checked })}
+                id="openInNewTab"
+              />
+              <label htmlFor="openInNewTab" style={{ color: config.theme.textColor }}>
                 Open in New Tab
               </label>
             </div>
 
-            <div className="field">
-              <label style={{ color: config.theme.textColor }}>
-                <input
-                  type="checkbox"
-                  checked={editingTile.showStatusIndicator ?? true}
-                  onChange={(e) => setEditingTile({ ...editingTile, showStatusIndicator: e.target.checked })}
-                />
+            <div className="field checkbox-field">
+              <input
+                type="checkbox"
+                checked={editingTile.showStatusIndicator ?? true}
+                onChange={(e) => setEditingTile({ ...editingTile, showStatusIndicator: e.target.checked })}
+                id="showStatusIndicator"
+              />
+              <label htmlFor="showStatusIndicator" style={{ color: config.theme.textColor }}>
                 Show Status Indicator
               </label>
               <small style={{ color: config.theme.textColor, opacity: 0.7, display: 'block', marginTop: '4px' }}>

@@ -1,8 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDashboardStore } from '../../store/dashboard';
 
 export const PageEditor: React.FC = () => {
   const { config, updateConfig } = useDashboardStore();
+  const [faviconFile, setFaviconFile] = useState<File | null>(null);
+
+  const handleFaviconUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setFaviconFile(file);
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const result = event.target?.result as string;
+        updateConfig({ 
+          favicon: result,
+          faviconType: 'upload'
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   return (
     <div className="page-editor">
@@ -43,6 +60,106 @@ export const PageEditor: React.FC = () => {
                 width: '100%',
               }}
             />
+          </div>
+
+          <div className="field">
+            <label style={{ color: config.theme.textColor }}>Favicon</label>
+            <div style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
+              <button
+                onClick={() => updateConfig({ faviconType: 'emoji' })}
+                style={{
+                  padding: '6px 12px',
+                  border: 'none',
+                  borderRadius: config.theme.borderRadius,
+                  backgroundColor: config.faviconType === 'emoji' ? config.theme.primaryColor : config.theme.cardBackground,
+                  color: config.faviconType === 'emoji' ? 'white' : config.theme.textColor,
+                  cursor: 'pointer',
+                  fontSize: '0.85rem'
+                }}
+              >
+                Emoji
+              </button>
+              <button
+                onClick={() => updateConfig({ faviconType: 'url' })}
+                style={{
+                  padding: '6px 12px',
+                  border: 'none',
+                  borderRadius: config.theme.borderRadius,
+                  backgroundColor: config.faviconType === 'url' ? config.theme.primaryColor : config.theme.cardBackground,
+                  color: config.faviconType === 'url' ? 'white' : config.theme.textColor,
+                  cursor: 'pointer',
+                  fontSize: '0.85rem'
+                }}
+              >
+                URL
+              </button>
+              <button
+                onClick={() => updateConfig({ faviconType: 'upload' })}
+                style={{
+                  padding: '6px 12px',
+                  border: 'none',
+                  borderRadius: config.theme.borderRadius,
+                  backgroundColor: config.faviconType === 'upload' ? config.theme.primaryColor : config.theme.cardBackground,
+                  color: config.faviconType === 'upload' ? 'white' : config.theme.textColor,
+                  cursor: 'pointer',
+                  fontSize: '0.85rem'
+                }}
+              >
+                Upload
+              </button>
+            </div>
+            
+            {config.faviconType === 'emoji' && (
+              <input
+                type="text"
+                value={config.favicon || ''}
+                onChange={(e) => updateConfig({ favicon: e.target.value })}
+                placeholder="🏠"
+                style={{
+                  backgroundColor: config.theme.cardBackground,
+                  color: config.theme.textColor,
+                  border: `1px solid ${config.theme.primaryColor}30`,
+                  borderRadius: config.theme.borderRadius,
+                  padding: '8px 12px',
+                  width: '100%',
+                  fontSize: '18px',
+                  textAlign: 'center'
+                }}
+              />
+            )}
+            
+            {config.faviconType === 'url' && (
+              <input
+                type="url"
+                value={config.favicon || ''}
+                onChange={(e) => updateConfig({ favicon: e.target.value })}
+                placeholder="https://example.com/favicon.ico"
+                style={{
+                  backgroundColor: config.theme.cardBackground,
+                  color: config.theme.textColor,
+                  border: `1px solid ${config.theme.primaryColor}30`,
+                  borderRadius: config.theme.borderRadius,
+                  padding: '8px 12px',
+                  width: '100%',
+                }}
+              />
+            )}
+            
+            {config.faviconType === 'upload' && (
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleFaviconUpload}
+                style={{
+                  backgroundColor: config.theme.cardBackground,
+                  color: config.theme.textColor,
+                  border: `1px solid ${config.theme.primaryColor}30`,
+                  borderRadius: config.theme.borderRadius,
+                  padding: '8px 12px',
+                  width: '100%',
+                }}
+              />
+            )}
           </div>
         </div>
       </div>
@@ -149,57 +266,61 @@ export const PageEditor: React.FC = () => {
         <h3 style={{ color: config.theme.textColor }}>Page Elements</h3>
         
         <div className="form-fields">
-          <div className="field">
-            <label style={{ color: config.theme.textColor }}>
-              <input
-                type="checkbox"
-                checked={config.layout.showTitle}
-                onChange={(e) => updateConfig({ 
-                  layout: { ...config.layout, showTitle: e.target.checked }
-                })}
-              />
+          <div className="field checkbox-field">
+            <input
+              type="checkbox"
+              checked={config.layout.showTitle}
+              onChange={(e) => updateConfig({ 
+                layout: { ...config.layout, showTitle: e.target.checked }
+              })}
+              id="showTitle"
+            />
+            <label htmlFor="showTitle" style={{ color: config.theme.textColor }}>
               Show Dashboard Title
             </label>
           </div>
 
-          <div className="field">
-            <label style={{ color: config.theme.textColor }}>
-              <input
-                type="checkbox"
-                checked={config.layout.showSearch}
-                onChange={(e) => updateConfig({ 
-                  layout: { ...config.layout, showSearch: e.target.checked }
-                })}
-              />
+          <div className="field checkbox-field">
+            <input
+              type="checkbox"
+              checked={config.layout.showSearch}
+              onChange={(e) => updateConfig({ 
+                layout: { ...config.layout, showSearch: e.target.checked }
+              })}
+              id="showSearch"
+            />
+            <label htmlFor="showSearch" style={{ color: config.theme.textColor }}>
               Show Search Bar
             </label>
           </div>
 
-          <div className="field">
-            <label style={{ color: config.theme.textColor }}>
-              <input
-                type="checkbox"
-                checked={config.layout.showCategories}
-                onChange={(e) => updateConfig({ 
-                  layout: { ...config.layout, showCategories: e.target.checked }
-                })}
-              />
+          <div className="field checkbox-field">
+            <input
+              type="checkbox"
+              checked={config.layout.showCategories}
+              onChange={(e) => updateConfig({ 
+                layout: { ...config.layout, showCategories: e.target.checked }
+              })}
+              id="showCategories"
+            />
+            <label htmlFor="showCategories" style={{ color: config.theme.textColor }}>
               Show Category Filters
             </label>
           </div>
 
-          <div className="field">
-            <label style={{ color: config.theme.textColor }}>
-              <input
-                type="checkbox"
-                checked={config.layout.showEditButton}
-                onChange={(e) => updateConfig({ 
-                  layout: { ...config.layout, showEditButton: e.target.checked }
-                })}
-              />
+          <div className="field checkbox-field">
+            <input
+              type="checkbox"
+              checked={config.layout.showEditButton}
+              onChange={(e) => updateConfig({ 
+                layout: { ...config.layout, showEditButton: e.target.checked }
+              })}
+              id="showEditButton"
+            />
+            <label htmlFor="showEditButton" style={{ color: config.theme.textColor }}>
               Show Edit Button
             </label>
-            <small style={{ color: config.theme.textColor, opacity: 0.7, display: 'block', marginTop: '4px' }}>
+            <small style={{ color: config.theme.textColor, opacity: 0.7, display: 'block', marginTop: '4px', marginLeft: '24px' }}>
               Use Ctrl+E to access editor when hidden
             </small>
           </div>

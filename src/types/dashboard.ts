@@ -29,6 +29,8 @@ export interface DashboardTile {
 export interface DashboardConfig {
   title: string;
   subtitle?: string;
+  favicon?: string;
+  faviconType?: 'emoji' | 'url' | 'upload';
   theme: ThemeConfig;
   layout: LayoutConfig;
   tiles: DashboardTile[];

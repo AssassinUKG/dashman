@@ -6,44 +6,52 @@ export const LayoutEditor: React.FC = () => {
 
   return (
     <div className="layout-editor">
-      <h3 style={{ color: config.theme.textColor }}>Layout Settings</h3>
-      
-      <div className="field">
-        <label style={{ color: config.theme.textColor }}>Columns</label>
-        <input
-          type="number"
-          min="1"
-          max="12"
-          value={config.layout.columns}
-          onChange={(e) => updateConfig({ 
-            layout: { ...config.layout, columns: parseInt(e.target.value) }
-          })}
-          style={{
-            backgroundColor: config.theme.cardBackground,
-            color: config.theme.textColor,
-            border: `1px solid ${config.theme.primaryColor}30`,
-            borderRadius: config.theme.borderRadius,
-          }}
-        />
-      </div>
+      <div className="editor-section">
+        <h3 style={{ color: config.theme.textColor }}>Layout Settings</h3>
+        
+        <div className="form-fields">
+          <div className="field">
+            <label style={{ color: config.theme.textColor }}>Columns</label>
+            <input
+              type="number"
+              min="1"
+              max="12"
+              value={config.layout.columns}
+              onChange={(e) => updateConfig({ 
+                layout: { ...config.layout, columns: parseInt(e.target.value) }
+              })}
+              style={{
+                backgroundColor: config.theme.cardBackground,
+                color: config.theme.textColor,
+                border: `1px solid ${config.theme.primaryColor}30`,
+                borderRadius: config.theme.borderRadius,
+                padding: '8px 12px',
+                width: '100%',
+              }}
+            />
+          </div>
 
-      <div className="field">
-        <label style={{ color: config.theme.textColor }}>Gap (px)</label>
-        <input
-          type="number"
-          min="0"
-          max="100"
-          value={config.layout.gap}
-          onChange={(e) => updateConfig({ 
-            layout: { ...config.layout, gap: parseInt(e.target.value) }
-          })}
-          style={{
-            backgroundColor: config.theme.cardBackground,
-            color: config.theme.textColor,
-            border: `1px solid ${config.theme.primaryColor}30`,
-            borderRadius: config.theme.borderRadius,
-          }}
-        />
+          <div className="field">
+            <label style={{ color: config.theme.textColor }}>Gap (px)</label>
+            <input
+              type="number"
+              min="0"
+              max="100"
+              value={config.layout.gap}
+              onChange={(e) => updateConfig({ 
+                layout: { ...config.layout, gap: parseInt(e.target.value) }
+              })}
+              style={{
+                backgroundColor: config.theme.cardBackground,
+                color: config.theme.textColor,
+                border: `1px solid ${config.theme.primaryColor}30`,
+                borderRadius: config.theme.borderRadius,
+                padding: '8px 12px',
+                width: '100%',
+              }}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -40,6 +40,8 @@ const defaultTheme: ThemeConfig = {
 const defaultConfig: DashboardConfig = {
   title: 'Homelab Dashboard',
   subtitle: 'Your personal service hub',
+  favicon: '🏠',
+  faviconType: 'emoji',
   theme: defaultTheme,
   layout: {
     columns: 4,
